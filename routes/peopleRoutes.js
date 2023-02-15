@@ -1,45 +1,12 @@
 const express = require("express");
 const peopleModel = require("../models/people");
 const app = express();
+const people_controller = require("../controllers/peoplecontroller");
 
-app.get("/peoples", async (request, response) => {
+app.get("/people",people_controller.people_get);
 
-  try {
-    const peoples = await peopleModel.find();
-    response.send(peoples);
-  } catch (error) {
-    response.status(500).send(error);
-  }
-});
+app.post("/people",people_controller.people_post);
+app.patch("/people/:id",people_controller.people_patch);
 
-app.post("/people", async (request, response) => {
-
-  try {
-    const people = new peopleModel(request.body);
-    await people.save();
-    response.send(people);
-  } catch (error) {
-    response.status(500).send(error);
-  }
-});
-app.patch("/people/:id", async (request, response) => {
-  try {
-    const people=await peopleModel.findByIdAndUpdate(request.params.id, request.body);
-    await people.save();
-    response.send(people);
-  } catch (error) {
-    response.status(500).send(error);
-  }
-});
-
-app.delete("/people/:id", async (request, response) => {
-  try {
-    const people = await peopleModel.findByIdAndDelete(request.params.id);
-
-    if (!people) response.status(404).send("No item found");
-    response.status(200).send("Deleted");
-  } catch (error) {
-    response.status(500).send(error);
-  }
-});
+app.delete("/people/:id",people_controller.people_delete);
 module.exports = app;
