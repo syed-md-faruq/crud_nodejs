@@ -6,7 +6,7 @@ const people_controller = require("../controllers/peoplecontroller");
 app.get("/people",people_controller.people_get);
 
 app.post("/people",people_controller.people_post);
-app.patch("/people/:id",people_controller.people_patch);
+app.put("/people/:id",people_controller.people_put);
 
 app.delete("/people/:id",people_controller.people_delete);
 module.exports = app;

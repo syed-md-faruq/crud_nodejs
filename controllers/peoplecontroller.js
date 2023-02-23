@@ -19,7 +19,7 @@ exports.people_post = async (request, response) => {
       response.status(500).send(error);
     }
 };
-exports.people_patch = async (request, response) => {
+exports.people_put = async (request, response) => {
     try {
       const people=await peopleModel.findByIdAndUpdate(request.params.id, request.body);
       await people.save();
